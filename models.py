@@ -3,7 +3,7 @@ import tensorflow as tf
 def create_model(num_characters):
 
     model = tf.keras.Sequential([
-        tf.keras.layers.Input(shape=(100, 200)),
+        tf.keras.layers.Input(shape=(100, 200, 3)),
         tf.keras.layers.Conv2D(128, 3, activation="relu"),
         tf.keras.layers.MaxPooling2D(2),
         tf.keras.layers.Conv2D(128, 3, activation="relu"),
@@ -14,7 +14,7 @@ def create_model(num_characters):
         tf.keras.layers.Reshape((num_characters, 10))
     ])
 
-    model.compile(loss=tf.keras.losses.CategoricalCrossentropy(),
+    model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                   optimizer=tf.keras.optimizers.Adam())
     
     return model
