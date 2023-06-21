@@ -14,7 +14,7 @@ def create_model(num_characters):
         tf.keras.layers.Reshape((num_characters, 10))
     ])
 
-    model.compile(loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+    model.compile(loss=tf.keras.losses.CategoricalCrossentropy(),
                   optimizer=tf.keras.optimizers.Adam())
     
     return model
