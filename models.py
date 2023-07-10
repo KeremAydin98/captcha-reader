@@ -72,7 +72,8 @@ def Encoder_f(num_layers, mlp_dim, num_heads, inputs):
   encoded = tf.keras.layers.LayerNormalization(name='encoder_norm')(x)
   return encoded
 
-def build_ViT(num_characters):
+def build_ViT(transformer_layers, patch_size, hidden_size, num_heads, mlp_dim, num_characters):
+    
   inputs = tf.keras.layers.Input(shape=(100, 200, 1))
   # generate patches with conv layer
   patches = generate_patch_conv_orgPaper_f(patch_size, hidden_size, inputs)
