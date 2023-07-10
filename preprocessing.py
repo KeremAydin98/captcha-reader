@@ -3,6 +3,8 @@ import string
 import os
 import cv2
 import numpy as np
+import random
+
 
 class Preprocessing():
 
@@ -56,3 +58,20 @@ def load_data(path):
             labels.append(filename)
 
     return np.array(images), labels
+
+
+preprocess = Preprocessing()
+
+def get_data_generator(root_path, all_images, batch_size=16):
+    images, labels = [], []
+    while True:
+      random.shuffle(all_images)
+      for image_path in all_images:
+          im = cv2.imread(os.path.join(root_path, image_path), 0)
+          im = np.array(im) / 255.0
+          images.append(np.array(im))
+          labels.append(np.array(preprocess.encode_text(image_path.split(".")[0])))
+
+          if len(images) >= batch_size:
+              yield np.array(images), np.array(labels)
+              images, labels = [], []
